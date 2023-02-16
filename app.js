@@ -23,12 +23,12 @@ app.use('/',boardRouter);
 // 기타 라우팅 처리 - 404 응답코드
 app.use((req,res)=>{
     res.status(404);
-    res.send('404-페이지가 없습니다.');
+    res.sendFile(path.join(__dirname,'public','404.html'));
 });
 // 기타 라우팅 처리 - 500 응답코드
 app.use((err,req,res,next)=>{
     res.status(500);
-    res.send('500-서부 내부 오류가 발생했습니다.');
+    res.sendFile(path.join(__dirname,'public','500.html'));
 });
 
 // 위에서 설정한 사항을 토대로 express 서버 실행

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>myinfo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/css/normalize.css">
+    <link rel="stylesheet" href="../static/css/main.css">
+    <link rel="stylesheet" href="../static/css/project2.css">
+    <style>
+        #wrapper {width: 960px; margin: 0 auto;}
+        li {float: left; margin: 0 45px;
+            text-align: center; width: 10%; list-style: none;}
+        nav {border-bottom: 1px solid black; height: 50px}
+        footer { border-top: 1px solid black}
+        a:link { color:black; text-decoration: none; font-weight: bold}
+        a:hover {color: red; text-decoration: underline}
+        a:visited {color:black; text-decoration: none; font-weight: bold }
+        a:active { color: red}
+        main {min-height: 500px}
+        header {height: 120px; border-bottom: 1px solid black}
+        table {margin:120px auto;}
+        th {text-align: right;padding: 10px}
+    </style>
+</head>
+<body>
+<div id="wrapper">
+    <header><h1>JSP 프로젝트 v1</h1>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="join.html">회원가입</a></li>
+                <li><a href="login.html">로그인</a></li>
+                <li><a href="list.html">게시판</a></li>
+                <li><a href="myinfo.html">회원정보</a></li>
+            </ul>
+    </header>
+    <main>
+        <h2>회원정보</h2>
+        <div>
+        <table>
+            <tr>
+                <th>아이디</th>
+                <td rowspan="4"></td>
+                <td><label for="uid"></label>
+                    <input type="text" name="id" id="uid"
+                    readonly value="siestageek"></td>
+            </tr>
+            <tr>
+                <th>이름</th>
+                <td><label for="name"></label>
+                    <input type="text" name="name" id="name"
+                           readonly value="으하하하"></td>
+            </tr>
+            <tr>
+                <th>이메일</th>
+                <td><label for="email"></label>
+                    <input type="text" name="email" id="email"
+                           readonly value="zzyzigy@naver.com"></td>
+            </tr>
+            <tr>
+                <th>가입일</th>
+                <td><label for="date"></label>
+                    <input type="text" name="date" id="date"
+                           readonly value="20214-05-01 12:01:33"></td>
+            </tr>
+        </table>
+        </div>
+    </main>
+    <footer><div class="copy">Copyright &copy; 2023. All Right Reserved</div></footer>
+<!--<div class="copy">라고 쓰면 가운데로 간다고 한다-->
+</div>
+</body>
+</html>

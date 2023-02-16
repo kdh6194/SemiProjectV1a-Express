@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>write</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/css/normalize.css">
+    <link rel="stylesheet" href="../static/css/main.css">
+    <link rel="stylesheet" href="../static/css/project2.css">
+    <style>
+        #wrapper {width: 960px; margin: 0 auto;}
+        li {float: left; margin: 0 45px;
+            text-align: center; width: 10%; list-style: none;}
+        nav {border-bottom: 1px solid black; height: 50px}
+        footer { border-top: 1px solid black}
+        a:link { color:black; text-decoration: none; font-weight: bold}
+        a:hover {color: red; text-decoration: underline}
+        a:visited {color:black; text-decoration: none; font-weight: bold }
+        a:active { color: red}
+        main {min-height: 500px}
+        #writefrm {width: 560px;}
+        .drgup {vertical-align: top}
+        header {height: 120px; border-bottom: 1px solid black}
+        table {margin:120px auto;}
+        th {text-align: right;padding: 10px}
+    </style>
+</head>
+<body>
+<div id="wrapper">
+<header><h1>JSP 프로젝트 v1</h1>
+    <ul>
+    <li> <a href="index.html">Home</a></li>
+    <li> <a href="join.html">회원가입</a></li>
+    <li> <a href="login.html">로그인</a></li>
+    <li> <a href="list.html">게시판</a></li>
+    <li> <a href="myinfo.html">회원정보</a></li>
+    </ul>
+</header>
+<main>
+    <section>
+        <h2>새글 쓰기</h2>
+        <form name="write" id="writefrm"></form>
+                <div>제 목</div>
+                <div><label for="title"></label>
+                    <input type="text" name="title" id="title"></div>
+                <div>작성자</div>
+                <div><label for="uid"></label>
+                    <input type="text" name="uid" id="uid"
+                    readonly value="zzyzzy"></div>
+                <div>작성게시판</div>
+                <div><label for="date"></label>
+                    <select name="date" id="date">
+                        <option>--게시판--</option>
+                        <option>정보게시판</option>
+                        <option>유머게시판</option>
+                        <option>비밀게시판</option>
+                        <option>자유게시판</option>
+                    </select>
+                </div>
+                <div >본문</div>
+                <div><label for="contents" class="drgup"></label>
+                    <textarea name="contents" id="contents" cols="70" rows="25"></textarea></div>
+                <div><button type="button">작성완료</button>
+                    <button type="button">작성취소</button></div>
+    </section>
+</main>
+<footer><div class="copy">Copyright &copy; 2023. All Right Reserved</div></footer>
+</div>
+</body>
+</html>
