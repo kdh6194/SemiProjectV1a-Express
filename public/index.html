@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/project2.css">
+    <!--링크생성시 alt+enter하면 그자리에서 생성창이 생김 -->
+    <style>
+        /* 인라인에 블록을 지정하는이유는 인라인이 여백(margin,padding)의 값을
+        가지지 않기 때문에 지정을 해야 여백의 값을 줄 수 있는것이고
+        li에 값을 넣었을 때 일정 크기로 벌어진 것을 확인할 수 있었다
+        그리고 인라인을 블록으로 바꿔서 크기 값을 주었을때
+        애초에 값을 가지지 않아 auto 값을 인지 못하는듯 하다*/
+        #wrapper {width: 960px; margin: 0 auto;}
+        li {float: left; margin: 0 45px;
+            text-align: center; width: 10%; list-style: none;}
+        nav {border-bottom: 1px solid black; height: 50px}
+        footer { border-top: 1px solid black}
+        a:link { color:black; text-decoration: none; font-weight: bold}
+        a:hover {color: red; text-decoration: underline}
+        a:visited {color:black; text-decoration: none; font-weight: bold }
+        a:active { color: red}
+        main {min-height: 500px}
+    </style>
+</head>
+<body>
+<div id="wrapper">
+      <header><h1>JSP 프로젝트 v1</h1></header>
+          <nav>
+              <ul>
+                  <li><a href="index.html">Home</a></li>
+                  <li><a href="join.html">회원가입</a></li>
+                  <li><a href="login.html">로그인</a></li>
+                  <li><a href="list.html">게시판</a></li>
+                  <li><a href="myinfo.html">회원정보</a></li>
+              </ul>
+          </nav>
+      <main>
+          <section>
+              <article>
+                  <img src="/img/smile.png" alt="" width="100%">
+              </article>
+          </section>
+      </main>
+      <footer>
+          <div class="copy">Copyright &copy; 2023. All Right Reserved</div>
+      </footer>
+</div>
+</body>
+</html>

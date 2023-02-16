@@ -1,0 +1,12 @@
+#wrapper { width: 1200px; margin: 0 auto;}
+header{ border:1px solid gray; display:inline-block; background: #dddddd;
+    width: 1200px; height: 100px}
+h1 { float: left; color: navy;
+    display: inline-block; margin: 5px 0 0 40px; text-shadow: 2px 2px 0 orange}
+header ul {list-style: none; border: 1px solid black; float:right;
+    padding: 15px 12%; margin: 46px 5px 0; background: black; color: white;}
+header ul li { display: inline-block; padding: 0 45px;}
+.copy { text-align: center;}
+/*광고문구*/
+span {border: 1px solid lightgray; background: lightgray; font: 24px bold; color: white;
+    display: inline-block; margin: auto;}
