@@ -1,0 +1,46 @@
+{{# section 'css'}}
+    <style>
+        /*header {height: 120px; border-bottom: 1px solid black}*/
+        table {margin:120px auto;}
+    </style>
+{{/section}}
+<main>
+    <section>
+        <div>
+            <h2>회원가입</h2>
+            <table>
+                <tr>
+                    <th>아이디</th>
+                    <td rowspan="6"></td>
+                    <td><label for="uid"></label>
+                        <input type="text" name="id" id="uid"></td>
+                </tr>
+                <tr>
+                    <th>비밀번호</th>
+                    <td><label for="passwd"></label>
+                        <input type="password" name="passwd" id="passwd"></td>
+                </tr>
+                <tr>
+                    <th>비밀번호 확인</th>
+                    <td><label for="repasswd"></label>
+                        <input type="password" name="repasswd" id="repasswd"></td>
+                </tr>
+                <tr>
+                    <th>이름</th>
+                    <td><label for="name"></label>
+                        <input type="text" name="name" id="name"></td>
+                </tr>
+                <tr>
+                    <th>이메일</th>
+                    <td><label for="email"></label>
+                        <input type="text" name="email" id="email"></td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td><button type="button">입력 완료</button>
+                        <button type="reset">다시 입력</button></td>
+                </tr>
+            </table>
+        </div>
+    </section>
+</main>

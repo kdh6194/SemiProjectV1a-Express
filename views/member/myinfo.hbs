@@ -1,0 +1,39 @@
+{{# section 'css'}}
+    <style>
+        /*header {height: 120px; border-bottom: 1px solid black}*/
+        table {margin:120px auto;}
+        th {text-align: right;padding: 10px}
+    </style>
+{{/section}}
+<main>
+    <h2>회원정보</h2>
+    <div>
+        <table>
+            <tr>
+                <th>아이디</th>
+                <td rowspan="4"></td>
+                <td><label for="uid"></label>
+                    <input type="text" name="id" id="uid"
+                           readonly value="siestageek"></td>
+            </tr>
+            <tr>
+                <th>이름</th>
+                <td><label for="name"></label>
+                    <input type="text" name="name" id="name"
+                           readonly value="으하하하"></td>
+            </tr>
+            <tr>
+                <th>이메일</th>
+                <td><label for="email"></label>
+                    <input type="text" name="email" id="email"
+                           readonly value="zzyzigy@naver.com"></td>
+            </tr>
+            <tr>
+                <th>가입일</th>
+                <td><label for="date"></label>
+                    <input type="text" name="date" id="date"
+                           readonly value="20214-05-01 12:01:33"></td>
+            </tr>
+        </table>
+    </div>
+</main>

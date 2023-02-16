@@ -1,0 +1,37 @@
+{{# section 'css'}}
+    <style>
+        #writefrm {width: 560px;}
+        .drgup {vertical-align: top}
+        /*header {height: 120px; border-bottom: 1px solid black}*/
+        table {margin:120px auto;}
+        th {text-align: right;padding: 10px}
+    </style>
+{{/section}}
+<main>
+    <section>
+        <h2>새글 쓰기</h2>
+        <form name="write" id="writefrm"></form>
+        <div>제 목</div>
+        <div><label for="title"></label>
+            <input type="text" name="title" id="title"></div>
+        <div>작성자</div>
+        <div><label for="uid"></label>
+            <input type="text" name="uid" id="uid"
+                   readonly value="zzyzzy"></div>
+        <div>작성게시판</div>
+        <div><label for="date"></label>
+            <select name="date" id="date">
+                <option>--게시판--</option>
+                <option>정보게시판</option>
+                <option>유머게시판</option>
+                <option>비밀게시판</option>
+                <option>자유게시판</option>
+            </select>
+        </div>
+        <div >본문</div>
+        <div><label for="contents" class="drgup"></label>
+            <textarea name="contents" id="contents" cols="70" rows="25"></textarea></div>
+        <div><button type="button">작성완료</button>
+            <button type="button">작성취소</button></div>
+    </section>
+</main>

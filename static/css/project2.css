@@ -10,6 +10,7 @@ a:hover {color:red; text-decoration: underline; font-weight: bold }
 a:active { color: orange;}
 main {min-height: 500px}
 hr {background: black; height: 2px;}
+footer { border-top: 1px solid black}
 .copy {text-align: center}
 /*회원 가입 로그인*/
 form {width: 310px; margin: 0 auto; vertical-align: middle;}

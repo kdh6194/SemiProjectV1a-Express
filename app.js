@@ -1,7 +1,8 @@
 // express 모듈과 기타 미들웨어 모듈 사용 선언
 const express = require('express');
 const path = require('path');
-const logger = require('morgan');
+const logger = require('morgan')
+const {engine} = require('express-handlebars');
 
 // 라우팅 설정 모듈화
 const indexRouter = require('./routes/index');
@@ -12,8 +13,23 @@ const boardRouter = require('./routes/board');
 const app = express();
 const port = process.env.PORT || 3000;
 
+app.engine('hbs',engine({
+    extname: '.hbs', defaultLayout : 'layout',
+    helpers: {
+        section: function(name, options) {
+            if(!this._sections) this._sections = {}
+            this._sections[name] = options.fn(this)
+            return null
+        },
+    },
+}));
+app.set('views',path.join(__dirname,'views'));
+app.set('view engine','hbs');
+
 //라우팅 없이 바로 호출 가능하도록 static 폴더 설정
 app.use(express.static(path.join(__dirname,'static')));
+
+app.use(logger('dev'));
 
 // 라우팅 모듈 등록 - 클라이언트 요청 처리 핵심 파트
 app.use('/',indexRouter);
@@ -27,6 +43,7 @@ app.use((req,res)=>{
 });
 // 기타 라우팅 처리 - 500 응답코드
 app.use((err,req,res,next)=>{
+    console.log(err);
     res.status(500);
     res.sendFile(path.join(__dirname,'public','500.html'));
 });

@@ -1,0 +1,134 @@
+{{# section 'css'}}
+    <style>
+        li {float: left; margin: 0 45px;
+        text-align: center; width: 15%; list-style: none}
+        /*header {border-bottom: 1px solid black; height: 120px}*/
+        h2 { text-align: center}
+        .board {width: 700px; margin: 0 auto; table-layout: fixed}
+        .board td {text-align: center; padding: 7px}
+        .board th {background: ivory }
+        .board td:nth-of-type(2) {white-space: nowrap; overflow: hidden; text-overflow: ellipsis }
+        .board tr:nth-of-type(even) {background: lightgoldenrodyellow }
+        .board tr:nth-of-type(odd) {background: ivory }
+        .alignrgt {text-align-last: right}
+
+        .page {list-style: none; padding: 0 45px;  width: 500px}
+        .page li {display: inline-block; padding: 5px; margin: 0 auto;}
+        .cpage {font: bold 24px '맑은 고딕'; color: red;}
+        .prev {color: #cccccc}
+    </style>
+{{/section}}
+<main>
+    <h2>게시판</h2>
+    <section>
+        <div>
+
+            <table class="board">
+                <colgroup><!--각테이블컬럼마다 미리 적용할 수 있는 태그-->
+                    <col style="width: 10%">
+                    <col>
+                    <col style="width: 15%">
+                    <col style="width: 15%">
+                    <col style="width: 10%">
+                </colgroup>
+                <tr><td colspan="5" class="alignrgt">
+                    <button type="button" onclick="location.href='write.html'">새글쓰기</button></td></tr>
+                <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>작성일</th>
+                    <th>조회</th>
+                </tr>
+                <tr>
+                    <td style="text-align: center; ">1</td>
+                    <td style="text-align: center;"><a href="/view.html">시간은 금이라구,친구! 진짜라구, 친구! 정말이라구, 친구! 참말이라구, 친구! 아! 좀 믿어라!</a></td>
+                    <td style="text-align: center; ">siestageek</td>
+                    <td style="text-align: center; ">2014-05-05</td>
+                    <td style="text-align: center; ">777</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center; ">2</td>
+                    <td style="text-align: center; "><a href="/view.html">시간은 금이라구,친구! 진짜라구, 친구! 정말이라구, 친구! 참말이라구, 친구! 아! 좀 믿어라!</a></td>
+                    <td style="text-align: center; ">siestageek</td>
+                    <td style="text-align: center; ">2014-05-05</td>
+                    <td style="text-align: center; ">777</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center; ">3</td>
+                    <td style="text-align: center; "><a href="/view.html">시간은 금이라구,친구! 진짜라구, 친구! 정말이라구, 친구! 참말이라구, 친구! 아! 좀 믿어라!</a></td>
+                    <td style="text-align: center; ">siestageek</td>
+                    <td style="text-align: center; ">2014-05-05</td>
+                    <td style="text-align: center; ">777</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center; ">4</td>
+                    <td style="text-align: center; "><a href="/view.html">시간은 금이라구,친구! 진짜라구, 친구! 정말이라구, 친구! 참말이라구, 친구! 아! 좀 믿어라!</a></td>
+                    <td style="text-align: center; ">siestageek</td>
+                    <td style="text-align: center; ">2014-05-05</td>
+                    <td style="text-align: center; ">777</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center; ">5</td>
+                    <td style="text-align: center; "><a href="/view.html">시간은 금이라구,친구! 진짜라구, 친구! 정말이라구, 친구! 참말이라구, 친구! 아! 좀 믿어라!</a></td>
+                    <td style="text-align: center; ">siestageek</td>
+                    <td style="text-align: center; ">2014-05-05</td>
+                    <td style="text-align: center; ">777</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center; ">6</td>
+                    <td style="text-align: center; "><a href="/view.html">시간은 금이라구,친구! 진짜라구, 친구! 정말이라구, 친구! 참말이라구, 친구! 아! 좀 믿어라!</a></td>
+                    <td style="text-align: center; ">siestageek</td>
+                    <td style="text-align: center; ">2014-05-05</td>
+                    <td style="text-align: center; ">777</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center; ">7</td>
+                    <td style="text-align: center; "><a href="/view.html">시간은 금이라구,친구! 진짜라구, 친구! 정말이라구, 친구! 참말이라구, 친구! 아! 좀 믿어라!</a></td>
+                    <td style="text-align: center; ">siestageek</td>
+                    <td style="text-align: center; ">2014-05-05</td>
+                    <td style="text-align: center; ">777</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center; ">8</td>
+                    <td style="text-align: center; "><a href="/view.html">시간은 금이라구,친구! 진짜라구, 친구! 정말이라구, 친구! 참말이라구, 친구! 아! 좀 믿어라!</a></td>
+                    <td style="text-align: center; ">siestageek</td>
+                    <td style="text-align: center; ">2014-05-05</td>
+                    <td style="text-align: center; ">777</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center; ">9</td>
+                    <td style="text-align: center; "><a href="/view.html">시간은 금이라구,친구! 진짜라구, 친구! 정말이라구, 친구! 참말이라구, 친구! 아! 좀 믿어라!</a></td>
+                    <td style="text-align: center; ">siestageek</td>
+                    <td style="text-align: center; ">2014-05-05</td>
+                    <td style="text-align: center; ">777</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center; ">10</td>
+                    <td style="text-align: center; "><a href="/view.html">시간은 금이라구,친구! 진짜라구, 친구! 정말이라구, 친구! 참말이라구, 친구! 아! 좀 믿어라!</a></td>
+                    <td style="text-align: center; ">siestageek</td>
+                    <td style="text-align: center; ">2014-05-05</td>
+                    <td style="text-align: center; ">777</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center; ">11</td>
+                    <td style="text-align: center; "><a href="/view.html">시간은 금이라구,친구! 진짜라구, 친구! 정말이라구, 친구! 참말이라구, 친구! 아! 좀 믿어라!</a></td>
+                    <td style="text-align: center; ">siestageek</td>
+                    <td style="text-align: center; ">2014-05-05</td>
+                    <td style="text-align: center; ">777</td>
+                </tr>
+            </table>
+            <ul class="page">
+                <li class="prev">이전</li>
+                <li class="cpage">1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li>6</li>
+                <li>다음</li>
+            </ul>
+        </div>
+        <div class="clearfix"></div>
+    </section>
+</main>

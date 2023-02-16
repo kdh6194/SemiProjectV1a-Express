@@ -1,0 +1,29 @@
+{{# section 'css'}}
+    <style>
+        /*header {height: 120px; border-bottom: 1px solid black}*/
+        table {margin:120px auto;}
+        th {text-align: right;padding: 10px}
+    </style>
+{{/section}}
+<main>
+    <section>
+        <h2>로그인</h2>
+        <table>
+            <tr>
+                <th>아이디</th>
+                <td rowspan="3"></td>
+                <td><label for="uid"></label>
+                    <input type="text" name="id" id="uid"></td>
+            </tr>
+            <tr>
+                <th>비밀번호</th>
+                <td><label for="passwd"></label>
+                    <input type="password" name="passwd" id="passwd"></td>
+            </tr>
+            <tr>
+                <th></th>
+                <td><button type="button">로그인</button> </td>
+            </tr>
+        </table>
+    </section>
+</main>

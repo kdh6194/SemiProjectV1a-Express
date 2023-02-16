@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/project2.css">
+    <!--중괄호를 두개 사용하여 >style로 불러와도 괜춘하다
+    partials의 style.hbs를 생성하여 스타일 값을 저장해서 써도 되지만
+    css를 만들었는데 굳이 이렇게 할 필요가 없다
+    link 주소가 저런 이유는 app.js에 바로 호출 가능한 구문을 작성해서-->
+    {{{ _sections.css }}}
+</head>
+<body>
+<div id="wrapper">
+    {{> header }}
+    {{{ body }}}
+    {{> footer }}
+</div>
+</body>
+</html>
