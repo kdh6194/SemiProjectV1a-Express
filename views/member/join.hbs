@@ -2,18 +2,21 @@
     <style>
         /*header {height: 120px; border-bottom: 1px solid black}*/
         table {margin:120px auto;}
+        th {text-align: left}
+
     </style>
 {{/section}}
 <main>
     <section>
         <div>
             <h2>회원가입</h2>
+            <form name="joinfrm" style="width: 900px">
             <table>
                 <tr>
                     <th>아이디</th>
                     <td rowspan="6"></td>
-                    <td><label for="uid"></label>
-                        <input type="text" name="id" id="uid"></td>
+                    <td><label for="userid"></label>
+                        <input type="text" name="userid" id="userid"></td>
                 </tr>
                 <tr>
                     <th>비밀번호</th>
@@ -33,14 +36,18 @@
                 <tr>
                     <th>이메일</th>
                     <td><label for="email"></label>
-                        <input type="text" name="email" id="email"></td>
+                        <input type="email" name="email" id="email"></td>
                 </tr>
                 <tr>
                     <th></th>
-                    <td><button type="button">입력 완료</button>
+                    <td><button type="button" id="joinbtn">입력 완료</button>
                         <button type="reset">다시 입력</button></td>
-                </tr>
+                    </tr>
             </table>
+            </form>
         </div>
     </section>
 </main>
+{{# section 'script'}}
+    <script src="/js/join.js"></script>
+{{/section}}

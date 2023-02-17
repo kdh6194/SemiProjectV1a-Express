@@ -3,6 +3,8 @@ const express = require('express');
 const path = require('path');
 const logger = require('morgan')
 const {engine} = require('express-handlebars');
+const bodyParser = require('body-parser');
+const oracledb = require('./models/Oracle');
 
 // 라우팅 설정 모듈화
 const indexRouter = require('./routes/index');
@@ -28,6 +30,11 @@ app.set('view engine','hbs');
 
 //라우팅 없이 바로 호출 가능하도록 static 폴더 설정
 app.use(express.static(path.join(__dirname,'static')));
+
+app.use(express.json());
+app.use(express.urlencoded({extended:false}));
+app.use(bodyParser.json());
+oracledb.initConn();
 
 app.use(logger('dev'));
 
