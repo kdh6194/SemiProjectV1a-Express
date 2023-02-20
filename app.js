@@ -1,7 +1,7 @@
 // express 모듈과 기타 미들웨어 모듈 사용 선언
 const express = require('express');
 const path = require('path');
-const logger = require('morgan')
+const logger = require('morgan');
 const {engine} = require('express-handlebars');
 const bodyParser = require('body-parser');
 const oracledb = require('./models/Oracle');

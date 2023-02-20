@@ -1,4 +1,4 @@
-const oracledb = require('../models/Oracle')
+const oracledb = require('../models/Oracle');
 class Member{
     constructor(userid,passwd,name,email) {
         // insertsql = 'insert into member(mno,userid,passwd,name,email)values (mno.nextval,:1,:2,:3,:4)'

@@ -1,6 +1,6 @@
-const path = require('path')
-const express = require('express')
-const Member = require('../models/Member')
+const path = require('path');
+const express = require('express');
+const Member = require('../models/Member');
 const router = express.Router();
 
 router.get('/join.html',(req, res)=>{

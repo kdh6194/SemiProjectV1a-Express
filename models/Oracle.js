@@ -1,5 +1,5 @@
-const oracledb = require('oracledb')
-const dbconfig = require('../routes/dbconfig')
+const oracledb = require('oracledb');
+const dbconfig = require('../routes/dbconfig');
 
 const Oracle = {
     initConn : () => {
