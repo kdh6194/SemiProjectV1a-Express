@@ -19,7 +19,7 @@ router.get('/write.html',(req, res)=>{
     res.render('board/write',{title : '게시글 작성'});
 });
 router.post('/write.html',async (req, res)=>{
-    let viewName = '../board/failwrite'
+    let viewName = '../board/writefail'
     let {title,userid,contents}=req.body
     let rowcnt = new Board(null,title,userid,null,null, contents).putin().then((result)=>result);
     if (await rowcnt > 0) viewName = '/list.html'

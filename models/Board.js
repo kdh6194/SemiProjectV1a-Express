@@ -4,6 +4,7 @@ let boardsql = {
     insert : 'insert into board (bno,title,userid,contents)values (bno.nextval,:1,:2,:3)',
     select : "select bno,title,userid,to_char(regdate,'YYYY-MM-DD')regdate,contents from board order by bno desc",
     selectOne : "select bno,title,userid,to_char(regdate,'YYYY-MM-DD HH24:MI:SS')regdate2,contents from board where bno =:1 order by bno desc",
+    viewOne : 'update board set views = views + 1 where bno = :1',
     update : 'update board set title =:1 ,contents =:2 where bno =:3 ',
     delete : 'delete from board where bno =:1 '
 }
@@ -25,7 +26,7 @@ class Board {
         this.title = title;
         this.userid = userid;
         this.regdate = regdate;
-        this.views = 0;
+        this.views = views;
         this.contents = contents;
     }
     // constructor(bno,title,userid,regdate,views,contents)에서
@@ -98,6 +99,9 @@ class Board {
                 let bd = new Board(row.BNO,row.TITLE,row.USERID,row.REGDATE2,row.VIEWS,row.CONTENTS);
                 list.push(bd)
             }
+
+            await conn.execute(boardsql.viewOne,params);
+            await conn.commit();
 
         }
         catch (e){ console.log(e); }

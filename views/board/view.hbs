@@ -1,7 +1,8 @@
 {{# section 'css'}}
     <style>
         #view {width: 560px; margin: 0 auto;}
-        #contents { border: 1px solid #ddd; display: inline-block; width: 570px; min-height: 350px}
+        #contents { border: 1px solid #ddd; display: inline-block; width: 570px; min-height: 350px;
+            white-space:pre;}
     </style>
 {{/section}}
 <main>
@@ -28,9 +29,9 @@
             {{/list}}
             <div id="button"><button type="button"
                                      onclick="location.href='write.html'">새글쓰기</button>
-                <button type="button">수정하기</button>
-                <button type="button">목록으로</button>
-                <button type="button">삭제하기</button></div>
+                <button type="button" id="updatebtn">수정하기</button>
+                <button type="button" onclick="location.href='list.html'">목록으로</button>
+                <button type="button" id="deletebtn">삭제하기</button></div>
         </section>
     </div>
 </main>

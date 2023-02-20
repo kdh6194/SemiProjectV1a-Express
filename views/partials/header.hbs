@@ -3,7 +3,12 @@
     <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="join.html">회원가입</a></li>
+        {{# if session.userid}}
+<!--세션변수의 유무에 따라 메뉴가 다르게 보이게끔하는 방법이다-->
+        <li><a href="logout.html">로그아웃</a></li>
+        {{else}}
         <li><a href="login.html">로그인</a></li>
+        {{/if}}
         <li><a href="list.html">게시판</a></li>
         <li><a href="myinfo.html">회원정보</a></li>
     </ul>

@@ -5,15 +5,19 @@
         th {text-align: right;padding: 10px}
     </style>
 {{/section}}
+{{# section 'script'}}
+    <script src="/js/login.js"></script>
+{{/section}}
 <main>
     <section>
         <h2>로그인</h2>
+        <form name="login">
         <table>
             <tr>
                 <th>아이디</th>
                 <td rowspan="3"></td>
-                <td><label for="uid"></label>
-                    <input type="text" name="id" id="uid"></td>
+                <td><label for="userid"></label>
+                    <input type="text" name="userid" id="userid"></td>
             </tr>
             <tr>
                 <th>비밀번호</th>
@@ -22,8 +26,9 @@
             </tr>
             <tr>
                 <th></th>
-                <td><button type="button">로그인</button> </td>
+                <td><button type="button" id="loginbtn">로그인</button> </td>
             </tr>
         </table>
+        </form>
     </section>
 </main>

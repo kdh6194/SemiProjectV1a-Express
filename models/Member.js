@@ -1,6 +1,8 @@
 const oracledb = require('../models/Oracle');
 
-// let membersql = {insertsql : 'insert into member(mno,userid,passwd,name,email)values (mno.nextval,:1,:2,:3,:4)'}
+let membersql = {insertsql : 'insert into member(mno,userid,passwd,name,email)values (mno.nextval,:1,:2,:3,:4)',
+                loginsql : 'select count(userid) cnt from member where userid = :1 and passwd = :2'
+}
 // sql 자리에 membersql.insertsql이라고 작서하면 적용됨
 class Member{
     constructor(userid,passwd,name,email) {
@@ -16,11 +18,11 @@ class Member{
 
     async insert () {
         let conn = null;
-        let sql = 'insert into member(mno,userid,passwd,name,email)values (mno.nextval,:1,:2,:3,:4)'
+        // let sql = 'insert into member(mno,userid,passwd,name,email)values (mno.nextval,:1,:2,:3,:4)'
         let params = [this.userid,this.passwd,this.name,this.email]
         try{
             conn = await oracledb.makeConn();
-            let result = await conn.execute(sql,params);
+            let result = await conn.execute(membersql.insertsql,params);
             if (result.rowsAffected > 0) {console.log('회원정보 저장 성공')}//동작 확인용
             await conn.commit();
             // commit;이라고 작성해도 동작은 하지만
@@ -31,6 +33,27 @@ class Member{
           await oracledb.closeConn(conn)
             console.log('오라클db 접속 종료')
         }
+
+    }
+    async login(uid,pwd) { // 로그인 처리
+        let conn = null;
+        let params = [uid,pwd];
+        let islogin = 0;
+
+        try {
+            conn = await oracledb.makeConn();
+            let result = await conn.execute(membersql.loginsql,params,oracledb.options)
+
+            let rs = result.resultSet
+            let row = null;
+            while((row = await rs.getRow())){
+                islogin = row.CNT
+            }
+        }
+        catch (e){ console.log(e); }
+        finally { await oracledb.closeConn(conn); }
+
+        return islogin;
     }
 
 }
