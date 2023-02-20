@@ -3,11 +3,11 @@ const oracledb = require('./Oracle')
 let boardsql = {
     insert : 'insert into board (bno,title,userid,contents)values (bno.nextval,:1,:2,:3)',
     select : "select bno,title,userid,to_char(regdate,'YYYY-MM-DD')regdate,contents from board order by bno desc",
-    selectOne : "select bno,title,userid,to_char(regdate,'yyyy-mm-dd hh:mi:ss')regdate,contents from board where bno =:1 order by bno desc",
+    selectOne : "select bno,title,userid,to_char(regdate,'YYYY-MM-DD HH24:MI:SS')regdate2,contents from board where bno =:1 order by bno desc",
     update : 'update board set title =:1 ,contents =:2 where bno =:3 ',
     delete : 'delete from board where bno =:1 '
 }
-// to_char를 쓸때 to_char(regdate(컬럼명),'YYYY-MM-DD')regdate(컬럼명) 이렇게 작성해야 값이 출력
+// to_char를 쓸때 to_char(regdate(컬럼명),'YYYY-MM-DD')regdate(변수명?) 이렇게 작성해야 값이 출력
 // 한번에 지정해서 꺼내먹는 느낌
 class Board {
     bno;
@@ -48,8 +48,8 @@ class Board {
             }
             console.log(result);
         }
-        catch(e){console.log(e);}
-        finally{await oracledb.closeConn(conn);} // 종료
+        catch(e){ console.log(e); }
+        finally{ await oracledb.closeConn(conn); } // 종료
         return await insertcnt
     }
 
@@ -75,8 +75,8 @@ class Board {
             } // 넘어올때는 대문자로 작성
 
         }
-        catch (e){console.log(e);}
-        finally {await oracledb.closeConn(conn);}
+        catch (e){ console.log(e); }
+        finally { await oracledb.closeConn(conn); }
 
         return await list;
     }
@@ -85,25 +85,23 @@ class Board {
     //성적 상세조회
     async showOne(bno) {
         let conn = null;
-        let result = null;
+        let params = [bno];
         let list = [];
 
         try {
             conn = await oracledb.makeConn();
-            result = await conn.execute(boardsql.selectOne,[bno],this.options)
+            let result = await conn.execute(boardsql.selectOne,params,oracledb.options)
 
             let rs = result.resultSet
             let row = null;
             while((row = await rs.getRow())){
-                let cnt = new Board(row[1],row[2],row[4]);
-                cnt.sjno = row[0];
-                cnt.regdate = row[3];
-                list.push(cnt)
+                let bd = new Board(row.BNO,row.TITLE,row.USERID,row.REGDATE2,row.VIEWS,row.CONTENTS);
+                list.push(bd)
             }
 
         }
-        catch (e){console.log(e);}
-        finally {await oracledb.closeConn(conn);}
+        catch (e){ console.log(e); }
+        finally { await oracledb.closeConn(conn); }
 
         return await list;
     }
@@ -116,9 +114,13 @@ class Board {
 
         try {
             conn = await oracledb.makeConn();
+            let result = await conn.execute(boardsql.update,params);
+            if (result.rowsAffected > 0 ){
+                await conn.commit();
+            }
 
-        }catch(e){console.log(e);}
-        finally{await oracledb.closeConn(conn);}
+        }catch(e){ console.log(e); }
+        finally{ await oracledb.closeConn(conn); }
 
 
     }
@@ -133,8 +135,8 @@ class Board {
             conn = await oracledb.makeConn();
 
         }
-        catch(e){console.log(e);}
-        finally{await oracledb.closeConn(conn);}
+        catch(e){ console.log(e); }
+        finally{ await oracledb.closeConn(conn); }
 
 
     }
@@ -143,4 +145,4 @@ class Board {
 
 }
 
-module.exports =Board;
+module.exports = Board;
