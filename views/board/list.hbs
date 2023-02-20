@@ -22,7 +22,6 @@
     <h2>게시판</h2>
     <section>
         <div>
-
             <table class="board">
                 <colgroup><!--각테이블컬럼마다 미리 적용할 수 있는 태그-->
                     <col style="width: 10%">
@@ -40,83 +39,15 @@
                     <th>작성일</th>
                     <th>조회</th>
                 </tr>
+            {{# list}}
                 <tr>
-                    <td style="text-align: center; ">1</td>
-                    <td style="text-align: center;"><a href="/view.html">시간은 금이라구,친구! 진짜라구, 친구! 정말이라구, 친구! 참말이라구, 친구! 아! 좀 믿어라!</a></td>
-                    <td style="text-align: center; ">siestageek</td>
-                    <td style="text-align: center; ">2014-05-05</td>
-                    <td style="text-align: center; ">777</td>
+                    <td style="text-align: center; ">{{bno}}</td>
+                    <td style="text-align: center;"><a href="/view.html?bno={{bno}}">{{title}}</a></td>
+                    <td style="text-align: center; ">{{userid}}</td>
+                    <td style="text-align: center; ">{{regdate}}</td>
+                    <td style="text-align: center; ">{{views}}</td>
                 </tr>
-                <tr>
-                    <td style="text-align: center; ">2</td>
-                    <td style="text-align: center; "><a href="/view.html">시간은 금이라구,친구! 진짜라구, 친구! 정말이라구, 친구! 참말이라구, 친구! 아! 좀 믿어라!</a></td>
-                    <td style="text-align: center; ">siestageek</td>
-                    <td style="text-align: center; ">2014-05-05</td>
-                    <td style="text-align: center; ">777</td>
-                </tr>
-                <tr>
-                    <td style="text-align: center; ">3</td>
-                    <td style="text-align: center; "><a href="/view.html">시간은 금이라구,친구! 진짜라구, 친구! 정말이라구, 친구! 참말이라구, 친구! 아! 좀 믿어라!</a></td>
-                    <td style="text-align: center; ">siestageek</td>
-                    <td style="text-align: center; ">2014-05-05</td>
-                    <td style="text-align: center; ">777</td>
-                </tr>
-                <tr>
-                    <td style="text-align: center; ">4</td>
-                    <td style="text-align: center; "><a href="/view.html">시간은 금이라구,친구! 진짜라구, 친구! 정말이라구, 친구! 참말이라구, 친구! 아! 좀 믿어라!</a></td>
-                    <td style="text-align: center; ">siestageek</td>
-                    <td style="text-align: center; ">2014-05-05</td>
-                    <td style="text-align: center; ">777</td>
-                </tr>
-                <tr>
-                    <td style="text-align: center; ">5</td>
-                    <td style="text-align: center; "><a href="/view.html">시간은 금이라구,친구! 진짜라구, 친구! 정말이라구, 친구! 참말이라구, 친구! 아! 좀 믿어라!</a></td>
-                    <td style="text-align: center; ">siestageek</td>
-                    <td style="text-align: center; ">2014-05-05</td>
-                    <td style="text-align: center; ">777</td>
-                </tr>
-                <tr>
-                    <td style="text-align: center; ">6</td>
-                    <td style="text-align: center; "><a href="/view.html">시간은 금이라구,친구! 진짜라구, 친구! 정말이라구, 친구! 참말이라구, 친구! 아! 좀 믿어라!</a></td>
-                    <td style="text-align: center; ">siestageek</td>
-                    <td style="text-align: center; ">2014-05-05</td>
-                    <td style="text-align: center; ">777</td>
-                </tr>
-                <tr>
-                    <td style="text-align: center; ">7</td>
-                    <td style="text-align: center; "><a href="/view.html">시간은 금이라구,친구! 진짜라구, 친구! 정말이라구, 친구! 참말이라구, 친구! 아! 좀 믿어라!</a></td>
-                    <td style="text-align: center; ">siestageek</td>
-                    <td style="text-align: center; ">2014-05-05</td>
-                    <td style="text-align: center; ">777</td>
-                </tr>
-                <tr>
-                    <td style="text-align: center; ">8</td>
-                    <td style="text-align: center; "><a href="/view.html">시간은 금이라구,친구! 진짜라구, 친구! 정말이라구, 친구! 참말이라구, 친구! 아! 좀 믿어라!</a></td>
-                    <td style="text-align: center; ">siestageek</td>
-                    <td style="text-align: center; ">2014-05-05</td>
-                    <td style="text-align: center; ">777</td>
-                </tr>
-                <tr>
-                    <td style="text-align: center; ">9</td>
-                    <td style="text-align: center; "><a href="/view.html">시간은 금이라구,친구! 진짜라구, 친구! 정말이라구, 친구! 참말이라구, 친구! 아! 좀 믿어라!</a></td>
-                    <td style="text-align: center; ">siestageek</td>
-                    <td style="text-align: center; ">2014-05-05</td>
-                    <td style="text-align: center; ">777</td>
-                </tr>
-                <tr>
-                    <td style="text-align: center; ">10</td>
-                    <td style="text-align: center; "><a href="/view.html">시간은 금이라구,친구! 진짜라구, 친구! 정말이라구, 친구! 참말이라구, 친구! 아! 좀 믿어라!</a></td>
-                    <td style="text-align: center; ">siestageek</td>
-                    <td style="text-align: center; ">2014-05-05</td>
-                    <td style="text-align: center; ">777</td>
-                </tr>
-                <tr>
-                    <td style="text-align: center; ">11</td>
-                    <td style="text-align: center; "><a href="/view.html">시간은 금이라구,친구! 진짜라구, 친구! 정말이라구, 친구! 참말이라구, 친구! 아! 좀 믿어라!</a></td>
-                    <td style="text-align: center; ">siestageek</td>
-                    <td style="text-align: center; ">2014-05-05</td>
-                    <td style="text-align: center; ">777</td>
-                </tr>
+            {{/ list}}
             </table>
             <ul class="page">
                 <li class="prev">이전</li>

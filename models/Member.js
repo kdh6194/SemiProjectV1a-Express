@@ -1,7 +1,12 @@
 const oracledb = require('../models/Oracle');
+
+// let membersql = {insertsql : 'insert into member(mno,userid,passwd,name,email)values (mno.nextval,:1,:2,:3,:4)'}
+// sql 자리에 membersql.insertsql이라고 작서하면 적용됨
 class Member{
     constructor(userid,passwd,name,email) {
         // insertsql = 'insert into member(mno,userid,passwd,name,email)values (mno.nextval,:1,:2,:3,:4)'
+        //  sql 자리에 this.insertsql이라고 작서하면 적용됨
+        // 이렇게 쓰니 할때마다 출력되서 지저분해보임
 
         this.userid = userid
         this.passwd = passwd
