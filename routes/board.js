@@ -56,7 +56,7 @@ router.post('/view.html/update',(req, res)=>{
     if (suid && userid && (suid == userid)){
         new Board(bno, title, userid, null, null, contents).update().then((result)=>result);
         res.redirect(303,`/view.html?bno=${bno}`);
-    }
+    }// userid 요부분을 정확히 파악하는게 중요해보인다 여기서 자꾸 실수가 난다.
 });
 
 router.get('/view.html/delete',async (req, res)=>{
