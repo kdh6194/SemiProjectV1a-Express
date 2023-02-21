@@ -18,14 +18,10 @@ const port = process.env.PORT || 3000;
 
 app.engine('hbs',engine({
     extname: '.hbs', defaultLayout : 'layout',
-    helpers: {
-        section: function(name, options) {
-            if(!this._sections) this._sections = {}
-            this._sections[name] = options.fn(this)
-            return null
-        },
-    },
+    helpers: require('./helpers/hadlebars-helper'),
 }));
+// 핸들바의 장점은 helper를 부수적인것은 내가 작성해야함
+// 좋은점은 내가 수정을 할 수 있다
 app.set('views',path.join(__dirname,'views'));
 app.set('view engine','hbs');
 

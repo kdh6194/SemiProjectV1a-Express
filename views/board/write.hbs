@@ -9,7 +9,7 @@
 {{/section}}
 
 {{# section 'script'}}
-    <script src="../js/write.js"></script>
+    <script src="/js/write.js"></script>
 {{/section}}
 
 <main>
@@ -21,7 +21,7 @@
         <div>작성자</div>
         <div><label for="userid"></label>
             <input type="text" name="userid" id="userid"
-                   readonly value="zzyzzy"></div>
+                   readonly value="{{session.userid}}"></div>
         <div>작성게시판</div>
         <div><label for="catalog"></label>
             <select name="catalog" id="catalog">

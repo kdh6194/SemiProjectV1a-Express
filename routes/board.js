@@ -22,8 +22,11 @@ router.get('/view.html',async (req, res)=>{
 router.get('/write.html',(req, res)=>{
     if (req.session.userid) {
     res.render('board/write',{title : '게시글 작성'})
-    }else {res.redirect(303,'/list.html');}
+    }else {res.redirect(303,'/login.html');}
 });
+//주소를 치고 들어가는 것을 막는것
+// if(!req.session.userid) {res.redirect(303,주소)}
+// else {res.render(...)}
 router.post('/write.html',async (req, res)=>{
     let viewName = '../board/writefail'
     let {title,userid,contents}=req.body
@@ -35,4 +38,19 @@ router.post('/write.html',async (req, res)=>{
     res.redirect(303,viewName);
 });
 
+
+router.get('/view.html/update',(req, res)=>{
+    if (req.session.userid) {
+        res.render('board/view',{title : '게시글 작성'})
+    }else {res.redirect(303,'/view.html');}
+});
+
+router.get('/view.html/delete',async (req, res)=>{
+    let {bno,uid} = req.query.bno;
+    let suid = req.session.userid;
+    if (suid && uid && (suid = uid)){ // 글작성자와 삭제자가 일치하는 경우
+        new Board().delete(bno).then((result)=>result);
+        res.redirect(303,'/list.html');}
+}); // 근데 삭제하고나서 새로고침을 해야 삭제되었는지 확인 가능하다 -> 캐시에 남아있어서 늦게 지워지는 모양
+// 그리고 location.href 주소랑 일치해야 작동이 되는듯하다.
 module.exports = router

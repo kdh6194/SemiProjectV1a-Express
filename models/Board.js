@@ -130,19 +130,23 @@ class Board {
     }
 
 
-    async delete () {
+    async delete (bno) {
         let conn = null;
-        let params = [];
-        let insertcnt = 0;
+        let params = [bno];
+        let del = 0;
 
         try {
             conn = await oracledb.makeConn();
-
+            let result = await conn.execute(boardsql.delete, params); // 실행
+            await conn.commit(); // 저장
+            if (result.rowsAffected > 0) {
+                del = result.rowsAffected; // 콘솔 안찍고 자료를 넘겼음
+            }
+            console.log(result);
         }
         catch(e){ console.log(e); }
         finally{ await oracledb.closeConn(conn); }
-
-
+        return await del
     }
 
 
