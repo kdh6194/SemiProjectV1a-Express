@@ -5,9 +5,10 @@ const Board = require('../models/Board')
 
 router.get('/list.html',async (req, res)=>{
     let list = new Board().show().then((list) => list);
-    // console.log(await list)
+    console.log(await list)
     res.render('board/list',{title : '게시판', list : await list});
 });
+// 조회 부분에 조회수가 찍히지 않는 이유 : models에 views를 기입이 안되서 출력 안됬음
 // 제목이 데이터 타입이 varchar(100) 이라서 제목길이가 길어지면 에러발생
 // then뒤에 붙는 괄호안에는 async가 써도 안써도 그만이다(값이 같단다)
 router.get('/view.html',async (req, res)=>{

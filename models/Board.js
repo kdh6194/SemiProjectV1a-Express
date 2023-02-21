@@ -2,8 +2,8 @@ const oracledb = require('./Oracle')
 
 let boardsql = {
     insert : 'insert into board (bno,title,userid,contents)values (bno.nextval,:1,:2,:3)',
-    select : "select bno,title,userid,to_char(regdate,'YYYY-MM-DD')regdate,contents from board order by bno desc",
-    selectOne : "select bno,title,userid,to_char(regdate,'YYYY-MM-DD HH24:MI:SS')regdate2,contents from board where bno =:1 order by bno desc",
+    select : "select bno,title,userid,to_char(regdate,'YYYY-MM-DD')regdate,views,contents from board order by bno desc",
+    selectOne : "select bno,title,userid,to_char(regdate,'YYYY-MM-DD HH24:MI:SS')regdate2,views,contents from board where bno =:1 order by bno desc",
     viewOne : 'update board set views = views + 1 where bno = :1',
     update : 'update board set title =:1 ,contents =:2 where bno =:3 ',
     delete : 'delete from board where bno =:1 '

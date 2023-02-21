@@ -31,13 +31,13 @@ app.set('view engine','hbs');
 
 // 세션
 const maxAge = 1000 * 30;
-const sessionObj = {resave: false, saveUninitialized: false,
-    // secret: process.env.COOKIE_SECRET,
+const sessionObj = {
+    resave: false, saveUninitialized: false,
     secret: 'process.env.COOKIE_SECRET',
     cookie: { httpOnly: true, secure: false, },
     name: 'session-cookie',
     maxAge: maxAge
-};
+};// 세션관련 변수는 책을 참고하여 만들었으니 책 좀 봐라
 app.use(session(sessionObj));
 
 //라우팅 없이 바로 호출 가능하도록 static 폴더 설정
@@ -50,9 +50,10 @@ oracledb.initConn();
 
 // 생성한 세션을 모든 페이지에서 접근 가능하게 함
 app.use(function(req, res, next){
-    res.locals.session = req.session;
+    res.locals.session = req.session; // 정보를 가져올때 써야 하는 구문인거 같다
     next();
 });
+// 시스템에 저장하는 구문이다.
 
 app.use(logger('dev'));
 

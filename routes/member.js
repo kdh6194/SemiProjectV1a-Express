@@ -34,6 +34,8 @@ router.get('/logout.html',(req, res)=>{
     res.redirect(303,'/')
 });
 router.get('/myinfo.html',(req, res)=>{
+    if (req.session.userid){
     res.render('member/myinfo',{title : '나의 정보'});
+    }else {res.redirect(303,'/login.html')}
 });
 module.exports = router
