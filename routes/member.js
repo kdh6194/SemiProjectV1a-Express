@@ -33,9 +33,11 @@ router.get('/logout.html',(req, res)=>{
 // 메뉴의 url이 path와 다르면 에러가 발생한다.
     res.redirect(303,'/')
 });
-router.get('/myinfo.html',(req, res)=>{
+router.get('/myinfo.html',async (req, res)=>{
     if (req.session.userid){
-    res.render('member/myinfo',{title : '나의 정보'});
+        let islogin = new Member().selectOne(req.session.userid).then((result)=>result)
+        console.log(await islogin)
+    res.render('member/myinfo',{title : '나의 정보', islogin : await islogin});
     }else {res.redirect(303,'/login.html')}
 });
 module.exports = router

@@ -1,7 +1,8 @@
 const oracledb = require('../models/Oracle');
 
 let membersql = {insertsql : 'insert into member(mno,userid,passwd,name,email)values (mno.nextval,:1,:2,:3,:4)',
-                loginsql : 'select count(userid) cnt from member where userid = :1 and passwd = :2'
+                loginsql : 'select count(userid) cnt from member where userid = :1 and passwd = :2',
+                selectOne : "select userid,passwd,name,email,to_char(regdate,'YYYY-MM-DD HH24:MI:SS')regdate from member where userid = :1 "
 }
 // sql 자리에 membersql.insertsql이라고 작서하면 적용됨
 class Member{
@@ -55,6 +56,27 @@ class Member{
 
         return islogin;
     }
+    async selectOne(uid){
+        let conn = null;
+        let params = [uid];
+        let isLogin = [];
 
+        try {
+            conn = await oracledb.makeConn();
+            let result = await conn.execute(membersql.selectOne,params,oracledb.options);
+
+            let rs = result.resultSet;
+            let row = null;
+            while ((row = await rs.getRow())){
+                let info = new Member(row.USERID,null,row.NAME,row.EMAIL)
+                info.regdate = row.REGDATE
+                //info 안에 row.REGDATE를 작성했지만 인식을 하지못했다
+                //regdate를 인식 시키기 위해서 따로 뽑아서 값을 저장
+              isLogin.push(info)
+            }
+        }catch(e){console.log(e)}
+        finally {await oracledb.closeConn()}
+        return await isLogin;
+    }
 }
 module.exports = Member;
