@@ -1,0 +1,46 @@
+{{# section 'css'}}
+    <style>
+        #update {width: 560px;}
+        .drgup {vertical-align: top}
+        /*header {height: 120px; border-bottom: 1px solid black}*/
+        table {margin:120px auto;}
+        th {text-align: right;padding: 10px}
+    </style>
+{{/section}}
+
+{{# section 'script'}}
+    <script src="/js/update.js"></script>
+{{/section}}
+
+<main>
+        <h2>게시판 수정 하기</h2>
+        <form name="updatefrm" id="update">
+            {{# list}}
+                <div>제 목</div>
+                <div><label for="title"></label>
+                    <input type="text" name="title" id="title"
+                    value="{{title}}"></div>
+                <div>작성자</div>
+                <div><label for="userid"></label>
+                    <input type="text" name="userid" id="userid"
+                           readonly value="{{userid}}"></div>
+                <div>작성게시판</div>
+                <div><label for="catalog"></label>
+                    <select name="catalog" id="catalog">
+                        <option>--게시판--</option>
+                        <option>정보게시판</option>
+                        <option>유머게시판</option>
+                        <option>비밀게시판</option>
+                        <option>자유게시판</option>
+                    </select>
+                </div>
+                <div >본문</div>
+                <div><label for="contents" class="drgup"></label>
+                    <textarea name="contents" id="contents" cols="70" rows="25">{{contents}}</textarea></div>
+            {{/list}}
+                <div>
+                    <button type="button" id="updatebtn">수정완료</button>
+                    <button type="reset">작성취소</button>
+                </div>
+        </form>
+</main>

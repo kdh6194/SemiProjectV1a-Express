@@ -39,10 +39,24 @@ router.post('/write.html',async (req, res)=>{
 });
 
 
-router.get('/view.html/update',(req, res)=>{
-    if (req.session.userid) {
-        res.render('board/view',{title : '게시글 작성'})
-    }else {res.redirect(303,'/view.html');}
+router.get('/view.html/update',async (req, res)=>{
+    let {bno,uid} = req.query
+    let suid = req.session.userid
+    if (suid && uid && (suid == uid)){
+    let list = new Board().showOne(bno).then((result)=>result);
+    res.render('board/update',{title : '게시판 수정하기',list : await list});
+    }
+    else {res.redirect(303,'/list.html')}
+});
+
+router.post('/view.html/update',(req, res)=>{
+    let { title, userid,contents } = req.body;
+    let bno = req.query.bno
+    let suid = req.session.userid;
+    if (suid && userid && (suid == userid)){
+        new Board(bno, title, userid, null, null, contents).update().then((result)=>result);
+        res.redirect(303,`/view.html?bno=${bno}`);
+    }
 });
 
 router.get('/view.html/delete',async (req, res)=>{

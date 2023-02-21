@@ -4,8 +4,9 @@ let boardsql = {
     insert : 'insert into board (bno,title,userid,contents)values (bno.nextval,:1,:2,:3)',
     select : "select bno,title,userid,to_char(regdate,'YYYY-MM-DD')regdate,views,contents from board order by bno desc",
     selectOne : "select bno,title,userid,to_char(regdate,'YYYY-MM-DD HH24:MI:SS')regdate2,views,contents from board where bno =:1 order by bno desc",
+    selectCount : 'select count(bno) cnt from board',
     viewOne : 'update board set views = views + 1 where bno = :1',
-    update : 'update board set title =:1 ,contents =:2 where bno =:3 ',
+    update : 'update board set title =:1 ,contents =:2, regdate= current_timestamp where bno =:3 ',
     delete : 'delete from board where bno =:1 '
 }
 // to_char를 쓸때 to_char(regdate(컬럼명),'YYYY-MM-DD')regdate(변수명?) 이렇게 작성해야 값이 출력
@@ -66,14 +67,23 @@ class Board {
         // 빈 배열 안에 push를 해서 계속 담으니 값이 많이 출력 되었다
         try {
             conn = await oracledb.makeConn();
-            let result = await conn.execute(boardsql.select,params,oracledb.options)
-
+            let result = await conn.execute(boardsql.selectCount,params,oracledb.options)
             let rs = result.resultSet
-            let row = null;
+            let idx = -1, row = null;
+            if ((row = await rs.getRow())) {idx = row.CNT} // 총 게시글 수
+
+
+            conn = await oracledb.makeConn();
+            result = await conn.execute(boardsql.select,params,oracledb.options)
+            rs = result.resultSet
+            row = null;
             while((row = await rs.getRow())){
                 let bd = new Board(row.BNO,row.TITLE,row.USERID,row.REGDATE,row.VIEWS,null);
+                bd.idx = idx--; //글번호 컬럼
                 list.push(bd)
             } // 넘어올때는 대문자로 작성
+
+
 
         }
         catch (e){ console.log(e); }
@@ -113,20 +123,20 @@ class Board {
 
     async update () {
         let conn = null;
-        let params = [];
-        let insertcnt = 0;
+        let params = [this.title, this.contents, this.bno];
+        let updat = 0;
 
         try {
             conn = await oracledb.makeConn();
-            let result = await conn.execute(boardsql.update,params);
+            let result = await conn.execute(boardsql.update,params)
+            await conn.commit();
             if (result.rowsAffected > 0 ){
-                await conn.commit();
+                updat = result.rowsAffected;
             }
-
+            console.log(result)
         }catch(e){ console.log(e); }
         finally{ await oracledb.closeConn(conn); }
-
-
+        return await updat
     }
 
 
