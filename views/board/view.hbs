@@ -5,6 +5,15 @@
             white-space:pre;}
     </style>
 {{/section}}
+<!--<script>-->
+<!--    let newbtn = document.querySelector('#newbtn')-->
+<!--    optional chaining(?.)-->
+<!--    ? 앞의 객체변수가 null 이거나 undefined라면-->
+<!--    . 뒤의 코드를 실행하지않음-->
+<!--    newbtn?.addEventListener('click',()=>{-->
+<!--        location.href = '보내고싶은 주소'-->
+<!--    })  // 이거랑 내가 한거랑 비교하면 그냥 내꺼 쓸래(너무 길어)-->
+<!--</script>-->
 <main>
     <div id="view">
         <section>
@@ -27,12 +36,15 @@
                 <textarea name="contents" id="contents" cols="70" rows="25"
                           readonly>{{contents}}</textarea></div>
             {{/list}}
-            <!--views가 찍히지 않는 이유는 select에 views가 빠져있었다.-->
+            <!--views가 찍히지 않는 이유는 select에 views가 빠져있었다.
+            ${disabled}가 작동하려면 router에서 disabled가 지정되어있어야한다
+            이렇게 말고 쓰는 방법은 버튼 태그안에 또는 밖에 중괄호와 함께 if session.userid
+            로 작성하여 표현을 제한하는 조건은 작성해야 한다.-->
             <div id="button"><button type="button"
-                                     onclick="location.href='write.html'">새글쓰기</button>
-                <button type="button" id="updatebtn">수정하기</button>
+                                     onclick="location.href='write.html'" ${disabled}>새글쓰기</button>
+                <button type="button" id="updatebtn" ${disabled}>수정하기</button>
                 <button type="button" onclick="location.href='list.html'">목록으로</button>
-                <button type="button" id="deletebtn">삭제하기</button></div>
+                <button type="button" id="deletebtn" ${disabled}>삭제하기</button></div>
         </section>
     </div>
 </main>

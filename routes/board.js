@@ -14,10 +14,15 @@ router.get('/list.html',async (req, res)=>{
 router.get('/view.html',async (req, res)=>{
     let bno = req.query.bno
     let list = new Board().showOne(bno).then((list)=>list);
-    res.render('board/view',{title : '게시글',list : await list});
+    let disabled = req.session.userid ? '': 'disabled'
+    res.render('board/view',{title : '게시글',list : await list,disabled});
 });
+// disabled는 사용자가 해당요소를 클릭하거나 입력할 수 없도록 한다.
+// 사용하려면 if,삼항 연산자를 사용하여한다 그리고 render에 두번째 인자로 값을 할당해야함
 router.get('/write.html',(req, res)=>{
-    res.render('board/write',{title : '게시글 작성'});
+    if (req.session.userid) {
+    res.render('board/write',{title : '게시글 작성'})
+    }else {res.redirect(303,'/list.html');}
 });
 router.post('/write.html',async (req, res)=>{
     let viewName = '../board/writefail'
