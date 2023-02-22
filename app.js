@@ -11,6 +11,7 @@ const oracledb = require('./models/Oracle');
 const indexRouter = require('./routes/index');
 const memberRouter = require('./routes/member');
 const boardRouter = require('./routes/board');
+const zipcodeRouter = require('./routes/Zipcode');
 
 // express 객체 생성 및 포트 변수 선언
 const app = express();
@@ -57,6 +58,7 @@ app.use(logger('dev'));
 app.use('/',indexRouter);
 app.use('/',memberRouter);
 app.use('/',boardRouter);
+app.use('/',zipcodeRouter);
 
 // 기타 라우팅 처리 - 404 응답코드
 app.use((req,res)=>{
