@@ -60,7 +60,7 @@ app.use('/',indexRouter);
 app.use('/',memberRouter);
 app.use('/',boardRouter);
 app.use('/',zipcodeRouter);
-app.use('/',zipcode2Router);
+app.use('/zipcode2',zipcode2Router);
 
 // 기타 라우팅 처리 - 404 응답코드
 app.use((req,res)=>{

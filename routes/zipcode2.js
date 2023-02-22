@@ -2,42 +2,40 @@ const express = require('express');
 const router = express.Router();
 const Zipcode = require('../models/Zipcode')
 
-router.get('/zipcode',async (req, res)=>{
-    let sidos = new Zipcode().getSido().then((result)=>result);
-    // console.log(await sidos)
+router.get('/',async (req, res)=>{
+ res.render('zipcode2',{title:'시구군동 찾기 v2'})
+});
 
-    let sido = req.query.sido;
-    let gugun = req.query.gugun;
-    let dong = req.query.dong;
-    let [guguns, dongs, zips] = [null,null,null];
+router.get('/sido',async (req, res)=>{
+ let sidos = new Zipcode().getSido().then((sido)=>sido)
 
-    if(sido !== undefined) {
-       guguns = new Zipcode().getGugun(sido).then((result)=>result)}
-    // console.log(await guguns)
-    if(sido !== undefined && gugun !== undefined) {
-        dongs = new Zipcode().getDong(sido,gugun).then((result)=>result)}
-    // console.log(await dongs)
+ res.send(JSON.stringify(await sidos));  // 조회결과를 JSON형식을 전송
+}); // await는 뺴먹지 말고 기입해야 실행이 된다
 
-    if (sido !== undefined && gugun !== undefined && dong !== undefined){
-        zips = new Zipcode().getZipcode(sido,gugun,dong).then((result)=>result)
-    } console.log(await zips)
+router.get('/gugun/:sido',async (req, res)=>{
+ let sido = req.params.sido
+ let guguns = new Zipcode().getGugun(sido).then((gugun)=>gugun)
 
-    res.render('zipcode',{title:'시군구동 찾기',sidos:await sidos,guguns:await guguns,dongs:await dongs
-    ,zips:await zips,sido:sido, gugun:gugun, dong:dong});
-}); //app.js 라우터 경로에 zipcode를 설정을 안했기 때문에 '/'가 작동이 되지 않았음
-    // 같은 경로의 router.get이 있으면 처음에 있는 명령만 동작 에러 발생은 나지 않음
-    // 우편번호를 만들때는 한곳에 모아서 작성하자
-    // 여러동작이더라도 총괄적인 동작을 수행해야한다면 router는 하나만 할당
-    // 동작을 나눌때 신경을 많이써야 할듯 하다
+ res.send(JSON.stringify(await guguns));
+});
+ // path variable -> REST API에서 사용하는 방식으로 경로를 변수로 사용하는 기법
+// express 프레임워크에서 /:변수명 형식으로 사용하고 변수의 값을 가져오려면
+// req.params.변수명을 사용함
+router.get('/dong/:sido/:gugun',async (req, res)=>{
+ let sido = req.params.sido
+ let gugun = req.params.gugun
+ let dongs = new Zipcode().getDong(sido,gugun).then((dong)=>dong)
 
+ res.send(JSON.stringify(await dongs));
+});
 
-// router.get('/zipcode',async (req, res)=>{
-//     // let sido = req.query.sido
-//     let sido = '서울'
-//     let guguns = new Zipcode().getGugun(sido).then((result)=>result)
-//     console.log(await guguns)
-//     res.render('zipcode',{title:'시군구동 찾기',guguns:await guguns});
-// });
+router.get('/zip/:sido/:gugun/:dong',async (req, res)=>{
+ let sido = req.params.sido
+ let gugun = req.params.gugun
+ let dong = req.params.dong
 
+ let zips = new Zipcode().getZipcode(sido,gugun,dong).then((zip)=>zip)
 
+ res.send(JSON.stringify(await zips));
+});
 module.exports = router
