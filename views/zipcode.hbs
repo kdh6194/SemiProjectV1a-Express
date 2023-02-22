@@ -12,18 +12,24 @@
         location.href = url
     };
 
+   const getZip = () => {
+        let url = '?sido=' + sido.value +'&gugun=' + gugun.value + '&dong=' + dong.value;
+        location.href = url
+    };
     let sido = document.querySelector('#sido');
     let gugun = document.querySelector('#gugun');
     let dong = document.querySelector('#dong');
 
     sido.addEventListener('change',getGugun)
     gugun.addEventListener('change',getDong)
-    // dong.addEventListener('change',)
+    dong.addEventListener('change',getZip)
     // 옵션 선택은 change로 작성
+
     </script>
     <script>
         {{#if sido}}document.querySelector('#sido').value = '{{sido}}'; {{/if}}
         {{#if gugun}}document.querySelector('#gugun').value = '{{gugun}}'; {{/if}}
+        {{#if dong}}document.querySelector('#dong').value = '{{dong}}'; {{/if}}
     </script>
 {{/section}}
 <main>
@@ -51,9 +57,9 @@
                 </select>
             </div>
             <div>
-                {{# zipcodes}}
-                <p>{{zipcode}} {{sido}} {{gugun}} {{dong}} {{ri}} {{bunji}} {{seq}}</p>
-                {{/zipcodes}}
+                {{# zips}}
+                <p>{{zipcode}} : {{sido}} {{gugun}} {{dong}} {{ri}} {{bunji}}</p>
+                {{/zips}}
             </div>
         </article>
     </section>

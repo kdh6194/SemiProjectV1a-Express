@@ -8,12 +8,24 @@ let zipcodesql = {
 }
 
 class Zipcode {
+    zipcode;
     sido;
     gugun;
     dong;
-    zipcode;
+    ri;
+    bunji;
+    seq;
 
-    constructor() {
+
+    constructor(zipcode,sido,gugun,dong,ri,bunji,seq) {
+        this.zipcode = zipcode;
+        this.sido = sido;
+        this.gugun = gugun;
+        this.dong = dong;
+        this.ri = ri;
+        this.bunji = bunji;
+        this.seq = seq;
+
 
     }
 
@@ -47,8 +59,8 @@ class Zipcode {
             let rs = result.resultSet
             let row = null;
             while((row = await rs.getRow())){
-                // let info = new Zipcode(null,row.GUGUN,null,null); 이렇게 작성시 undefined
-                let info = {'gugun':row.GUGUN};
+                // let info = new Zipcode(null,row.GUGUN,null,null);
+                let info = {'gugun':row.GUGUN}; // 코드가 짧아서 좋은듯
                 guguns.push(info);
             }
 
@@ -68,6 +80,7 @@ class Zipcode {
             let row = null;
             while((row = await rs.getRow())){
                 // let info = new Zipcode(null,null,row.DONG,null); 이렇게 작성시 undefined
+                // 생성자의 변수 설정이 되어있지 않아서 실행이 되지 않았던거임
                 let info = {'dong':row.DONG};
                 dongs.push(info);
             }
@@ -88,7 +101,7 @@ class Zipcode {
             let rs = result.resultSet
             let row = null;
             while((row = await rs.getRow())){
-                let info = new Zipcode(row.ZIPCODE,row.SIDO,row.GUGUN,row.DONG,row.RI,row.BUNJI,row.SEQ);
+                let info = new Zipcode(row.ZIPCODE,row.SIDO,row.GUGUN,row.DONG,row.RI,row.BUNJI,row.SEQ)
                 zipcodes.push(info);
             }
 
