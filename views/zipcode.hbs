@@ -1,5 +1,30 @@
-{{# section 'script'}}
+{{# section 'css'}}
+{{/section}}
 
+{{# section 'script'}}
+    <script>
+    const getGugun = () => {
+        let url = '?sido=' + sido.value;
+        location.href = url
+    };
+    const getDong = () => {
+        let url = '?sido=' + sido.value +'&gugun=' + gugun.value;
+        location.href = url
+    };
+
+    let sido = document.querySelector('#sido');
+    let gugun = document.querySelector('#gugun');
+    let dong = document.querySelector('#dong');
+
+    sido.addEventListener('change',getGugun)
+    gugun.addEventListener('change',getDong)
+    // dong.addEventListener('change',)
+    // 옵션 선택은 change로 작성
+    </script>
+    <script>
+        {{#if sido}}document.querySelector('#sido').value = '{{sido}}'; {{/if}}
+        {{#if gugun}}document.querySelector('#gugun').value = '{{gugun}}'; {{/if}}
+    </script>
 {{/section}}
 <main>
     <section>
