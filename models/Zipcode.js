@@ -14,17 +14,16 @@ class Zipcode {
     dong;
     ri;
     bunji;
-    seq;
 
 
-    constructor(zipcode,sido,gugun,dong,ri,bunji,seq) {
+
+    constructor(zipcode,sido,gugun,dong,ri,bunji) {
         this.zipcode = zipcode;
         this.sido = sido;
         this.gugun = gugun;
         this.dong = dong;
         this.ri = ri;
         this.bunji = bunji;
-        this.seq = seq;
 
 
     }
@@ -101,7 +100,7 @@ class Zipcode {
             let rs = result.resultSet
             let row = null;
             while((row = await rs.getRow())){
-                let info = new Zipcode(row.ZIPCODE,row.SIDO,row.GUGUN,row.DONG,row.RI,row.BUNJI,row.SEQ)
+                let info = new Zipcode(row.ZIPCODE,row.SIDO,row.GUGUN,row.DONG,row.RI,row.BUNJI)
                 zipcodes.push(info);
             }
 

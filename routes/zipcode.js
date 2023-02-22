@@ -31,13 +31,4 @@ router.get('/zipcode',async (req, res)=>{
     // 동작을 나눌때 신경을 많이써야 할듯 하다
 
 
-// router.get('/zipcode',async (req, res)=>{
-//     // let sido = req.query.sido
-//     let sido = '서울'
-//     let guguns = new Zipcode().getGugun(sido).then((result)=>result)
-//     console.log(await guguns)
-//     res.render('zipcode',{title:'시군구동 찾기',guguns:await guguns});
-// });
-
-
 module.exports = router
