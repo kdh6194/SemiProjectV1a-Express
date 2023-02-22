@@ -51,11 +51,12 @@ router.get('/view.html/update',async (req, res)=>{
 
 router.post('/view.html/update',(req, res)=>{
     let { title, userid,contents } = req.body;
-    let bno = <req className="query bno"></req>
+    let bno = req.query.bno
     let suid = req.session.userid;
     if (suid && userid && (suid == userid)){
         new Board(bno, title, userid, null, null, contents).update().then((result)=>result);
-        res.redirect(303,`/view.html?bno=${bno}`);
+        res.redirect(303,`/view.html?bno=${bno}`); // 새로고침 전까진 수정이 안됨
+        // res.redirect(303,`/list.html`); list로 페이지를 띄웠을때 수정한 부분이 바꿔서 출력됨
     }// userid 요부분을 정확히 파악하는게 중요해보인다 여기서 자꾸 실수가 난다.
     //  req.body는 전부 가져오는것인지 컬럼명을 자세하게 작성해야하는듯하고
     //  req.query를 사용하면 뭔가 변경해서 사용해도 되는것 같다
