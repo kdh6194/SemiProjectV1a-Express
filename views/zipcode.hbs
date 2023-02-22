@@ -8,17 +8,27 @@
             <div>
                 <select name="sido" id="sido">
                     <option>--시도--</option>
+                    {{#sidos}}
+                        <option>{{sido}}</option>
+                    {{/sidos}}
                 </select>
                 <select name="gugun" id="gugun">
                     <option>--시/구/군--</option>
+                    {{#guguns}}
+                        <option>{{gugun}}</option>
+                    {{/guguns}}
                 </select>
                 <select name="dong" id="dong">
                     <option>--읍/면/동--</option>
+                    {{#dongs}}
+                        <option>{{dong}}</option>
+                    {{/dongs}}
                 </select>
             </div>
-
             <div>
-                <p></p>
+                {{# zipcodes}}
+                <p>{{zipcode}} {{sido}} {{gugun}} {{dong}} {{ri}} {{bunji}} {{seq}}</p>
+                {{/zipcodes}}
             </div>
         </article>
     </section>
