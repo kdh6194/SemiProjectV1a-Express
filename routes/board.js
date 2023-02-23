@@ -1,12 +1,52 @@
-const path = require('path')
 const express = require('express')
 const router = express.Router();
 const Board = require('../models/Board')
+const ppg = 15;
+
+// 페이징 기능 지원
+// 현재 페이지를 의미하는 변수 : cpg
+// 현재 페이지에 해당하는 게시물들을 조회하려면 해당범위의 시작값과 종료값 계산
+// cpg : 1 => 1 ~ 5
+// cpg : 2 => 6 ~ 10
+// cpg : 3 => 11 ~ 15
+// cpg : 4 => 16 ~ 20
+//  수식
+//  페이지당 게시물 수 ppg : 5
+//  stnum : (cpage - 1) * ppg + 1
+//  ednum : stnum + ppg
+
+// 페이지네이션 : stpgn = 0<cpg<11 -> 12345678910
+//  stpgn = 0<cpg<11 -> 12345678910
+//  stpgn = 10<cpg<21 -> 11121314151617181920
+//  stpgn = 20<cpg<31 -> 21222324252627282930
+//  stpgn = 30<cpg<41 -> 31323334353637383940
+// stpgn = parseInt((cpg - 1) / 10) * 10 + 1
 
 router.get('/list.html',async (req, res)=>{
-    let list = new Board().show().then((list) => list);
-    console.log(await list)
-    res.render('board/list',{title : '게시판', list : await list});
+    let {cpg} = req.query;
+    cpg = cpg ? cpg : 1;
+    let stnum = (cpg - 1) * ppg + 1; // 지정한 페이지의 범위 시작값 계산
+    let stpgn = parseInt((cpg - 1) / 10) * 10 + 1
+
+    // 페이지네이션 블럭 생성
+    let stpgns = [];
+    for (let i = stpgn; i < stpgn + 10; i++) {
+        let iscpg = (i == cpg) ? true: false
+        let pgn = {'num': i,'iscpg':iscpg}
+        stpgns.push(pgn)
+    }
+    let alpg = new Board().selectCount().then((list) => list);
+
+    let isprev = ( cpg - 1 > 0 )? true:false ;
+    let isnext = ( cpg < alpg )? true:false ;
+    let pgn = {'prev': stpgn - 1, 'next': stpgn + 9 + 1 , 'isprev': isprev, 'isnext': isnext};
+
+
+
+    let list = new Board().show(stnum).then((list) => list);
+
+    res.render('board/list',{title : '게시판', list : await list, stpgns: stpgns, pgn:pgn });
+
 });
 // 조회 부분에 조회수가 찍히지 않는 이유 : models에 views를 기입이 안되서 출력 안됬음
 // 제목이 데이터 타입이 varchar(100) 이라서 제목길이가 길어지면 에러발생
@@ -15,7 +55,7 @@ router.get('/view.html',async (req, res)=>{
     let bno = req.query.bno
     let list = new Board().showOne(bno).then((list)=>list);
     let disabled = req.session.userid ? '': 'disabled'
-    res.render('board/view',{title : '게시글',list : await list,disabled});
+    res.render('board/view',{title : '게시글',list : await list, disabled});
 });
 // disabled는 사용자가 해당요소를 클릭하거나 입력할 수 없도록 한다.
 // 사용하려면 if,삼항 연산자를 사용하여한다 그리고 render에 두번째 인자로 값을 할당해야함

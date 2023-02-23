@@ -1,14 +1,31 @@
 const oracledb = require('./Oracle')
+const ppg = 15;
 
 let boardsql = {
     insert : 'insert into board (bno,title,userid,contents)values (bno.nextval,:1,:2,:3)',
     select : "select bno,title,userid,to_char(regdate,'YYYY-MM-DD')regdate,views,contents from board order by bno desc",
+    paging1 : "select * from(select bno,title,userid,to_char(regdate,'YYYY-MM-DD')regdate,views,contents," +
+                "row_number() over (order by bno desc) rowno from board",
+    paging2 : ") bd where rowno >= :1 and rowno <:2",
     selectOne : "select bno,title,userid,to_char(regdate,'YYYY-MM-DD HH24:MI:SS')regdate2,views,contents from board where bno =:1 order by bno desc",
     selectCount : 'select count(bno) cnt from board',
     viewOne : 'update board set views = views + 1 where bno = :1',
     update : 'update board set title =:1 ,contents =:2, regdate= current_timestamp where bno =:3 ',
     delete : 'delete from board where bno =:1 '
 }
+// 페이지네이션 : stpgn = 0<cpg<11 -> 12345678910
+//  stpgn = 0<cpg<11 -> 12345678910
+//  stpgn = 10<cpg<21 -> 11121314151617181920
+//  stpgn = 20<cpg<31 -> 21222324252627282930
+//  stpgn = 30<cpg<41 -> 31323334353637383940
+// stpgn = parseInt((cpg - 1) / 10) * 10 + 1
+// switch (cpg) {
+//      case >41 : 31323334353637383940
+//      case >31 : 21222324252627282930
+//      case >21 : 11121314151617181920
+//      case >11 : 12345678910
+// } 구문이 아닌 수식으로 작성할 수 있는 것은 수식으로 완성할 수 있어야 한다.
+
 // to_char를 쓸때 to_char(regdate(컬럼명),'YYYY-MM-DD')regdate(변수명?) 이렇게 작성해야 값이 출력
 // 한번에 지정해서 꺼내먹는 느낌
 class Board {
@@ -59,24 +76,23 @@ class Board {
     // (모듈화를 하는데 있어 하는 의미가 없어짐)
 
     //성적 전체조회
-    async show() {
+    async show(stnum) {
         let conn = null;
-        let params = [];
+        let params = [stnum, stnum + ppg ];
         let list = [];
         //  sjs 빈 배열을 안에 담지 않았을때에는 하나만 출력이 되었는데
         // 빈 배열 안에 push를 해서 계속 담으니 값이 많이 출력 되었다
         try {
             conn = await oracledb.makeConn();
-            let result = await conn.execute(boardsql.selectCount,params,oracledb.options)
-            let rs = result.resultSet
-            let idx = -1, row = null;
-            if ((row = await rs.getRow())) {idx = row.CNT} // 총 게시글 수
+            let idx = await this.selectCount();
+                idx = idx - stnum + 1;
+
 
 
             conn = await oracledb.makeConn();
-            result = await conn.execute(boardsql.select,params,oracledb.options)
-            rs = result.resultSet
-            row = null;
+            let result = await conn.execute(boardsql.paging1 + boardsql.paging2,params,oracledb.options)
+            let rs = result.resultSet
+            let row = null;
             while((row = await rs.getRow())){
                 let bd = new Board(row.BNO,row.TITLE,row.USERID,row.REGDATE,row.VIEWS,null);
                 bd.idx = idx--; //글번호 컬럼
@@ -92,6 +108,28 @@ class Board {
         return await list;
     }
 
+
+    async selectCount() {  // 총 게시물 수 계산
+        let conn = null;
+        let params = [];
+        let cnt = -1;
+
+        try {
+            conn = await oracledb.makeConn();
+            let result = await conn.execute(boardsql.selectCount,params,oracledb.options)
+            let rs = result.resultSet
+            let row = null;
+            if ((row = await rs.getRow())) {
+                cnt = row.CNT;
+            }
+
+
+        }
+        catch (e){ console.log(e); }
+        finally { await oracledb.closeConn(conn); }
+
+        return await cnt;
+    }
 
     //성적 상세조회
     async showOne(bno) {

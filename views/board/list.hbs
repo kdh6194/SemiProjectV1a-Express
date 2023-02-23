@@ -1,7 +1,5 @@
 {{# section 'css'}}
     <style>
-        li {float: left; margin: 0 45px;
-        text-align: center; width: 15%; list-style: none}
         /*header {border-bottom: 1px solid black; height: 120px}*/
         h2 { text-align: center}
         .board {width: 700px; margin: 0 auto; table-layout: fixed}
@@ -12,10 +10,10 @@
         .board tr:nth-of-type(odd) {background: ivory }
         .alignrgt {text-align-last: right}
 
-        .page {list-style: none; padding: 0 45px;  width: 500px}
-        .page li {display: inline-block; padding: 5px; margin: 0 auto;}
+        .page {list-style: none; padding:0; margin: 0 auto; width: 500px}
+        .page li {display: inline-block; padding: 10px; }
         .cpage {font: bold 24px '맑은 고딕'; color: red;}
-        .prev {color: #cccccc}
+        /*.prev {color: #cccccc}*/
     </style>
 {{/section}}
 <!--<script>-->
@@ -62,14 +60,15 @@
                 (기본키?,뭐시기 자동생성?이 도움을 주는듯)-->
             </table>
             <ul class="page">
-                <li class="prev">이전</li>
-                <li class="cpage">1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-                <li>6</li>
-                <li>다음</li>
+                <li class="prev"><a href="?cpg={{pgn.prev}}">이전</a></li>
+               {{# stpgns}}
+                   {{#if iscpg}}
+                       <li class="cpage">{{num}}</li>
+                   {{ else}}
+                       <li><a href="?cpg={{num}}">{{num}}</a></li>
+                   {{/if}}
+               {{/stpgns}}
+                <li><a href="?cpg={{pgn.next}}">다음</a></li>
             </ul>
         </div>
         <div class="clearfix"></div>
