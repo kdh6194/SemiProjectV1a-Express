@@ -11,8 +11,8 @@ const oracledb = require('./models/Oracle');
 const indexRouter = require('./routes/index');
 const memberRouter = require('./routes/member');
 const boardRouter = require('./routes/board');
-const zipcodeRouter = require('./routes/Zipcode');
-const zipcode2Router = require('./routes/Zipcode2');
+const zipcodeRouter = require('./routes/zipcode');
+const zipcode2Router = require('./routes/zipcode2');
 
 // express 객체 생성 및 포트 변수 선언
 const app = express();
