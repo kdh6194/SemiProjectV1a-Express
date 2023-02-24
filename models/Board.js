@@ -13,17 +13,15 @@ let boardsql = {
     update : 'update board set title =:1 ,contents =:2, regdate= current_timestamp where bno =:3 ',
     delete : 'delete from board where bno =:1 '
 }
-// 페이지네이션 : stpgn = 0<cpg<11 -> 12345678910
-//  stpgn = 0<cpg<11 -> 12345678910
-//  stpgn = 10<cpg<21 -> 11121314151617181920
-//  stpgn = 20<cpg<31 -> 21222324252627282930
-//  stpgn = 30<cpg<41 -> 31323334353637383940
-// stpgn = parseInt((cpg - 1) / 10) * 10 + 1
-// switch (cpg) {
-//      case >41 : 31323334353637383940
-//      case >31 : 21222324252627282930
-//      case >21 : 11121314151617181920
-//      case >11 : 12345678910
+
+// 동적쿼리 생성 함수
+const makeWhere = (ftype,fkey) =>{
+    let where = ` where title like '%${fkey}%' `;
+    if (ftype == 'userid') { where = ` where userid like '%${fkey}%' `}
+    else if (ftype == 'contents') { where = ` where contents like '%${fkey}%' `} //본문에 공백이 있으면 출력이 안됨
+    return where
+}
+
 // } 구문이 아닌 수식으로 작성할 수 있는 것은 수식으로 완성할 수 있어야 한다.
 
 // to_char를 쓸때 to_char(regdate(컬럼명),'YYYY-MM-DD')regdate(변수명?) 이렇게 작성해야 값이 출력
@@ -76,22 +74,28 @@ class Board {
     // (모듈화를 하는데 있어 하는 의미가 없어짐)
 
     //성적 전체조회
-    async show(stnum) {
+    async show(stnum,ftype,fkey) {
         let conn = null;
         let params = [stnum, stnum + ppg ];
         let list = [];
         let allcnt = -1;
+        let where = '';
+
+        if (fkey !== undefined){
+            where = makeWhere(ftype,fkey)
+        }
         //  sjs 빈 배열을 안에 담지 않았을때에는 하나만 출력이 되었는데
         // 빈 배열 안에 push를 해서 계속 담으니 값이 많이 출력 되었다
         try {
             conn = await oracledb.makeConn();
-            allcnt = await this.selectCount(conn);
+            allcnt = await this.selectCount(conn,where); // 총 게시글 수
                 let idx = allcnt - stnum + 1;
 
-
-
+                // where 는 위에 함수가 공백이 있기에 적용이 된것이다.
+                // 공백이 없으면 붙어서 입력되어 sql문이 실행이 안됨
+                // params[ ] 는 값만 저장가능 컬럼명은 저장안됨 ,컬럼명은 매개변수로 지정이 안됨
             conn = await oracledb.makeConn();
-            let result = await conn.execute(boardsql.paging1 + boardsql.paging2,params,oracledb.options)
+            let result = await conn.execute(boardsql.paging1 + where + boardsql.paging2,params,oracledb.options)
             let rs = result.resultSet
             let row = null;
             while((row = await rs.getRow())){
@@ -111,12 +115,12 @@ class Board {
     }
 
 
-    async selectCount(conn) {  // 총 게시물 수 계산
+    async selectCount(conn,where) {  // 총 게시물 수 계산
         let params = [];
         let cnt = -1;
 
         try {
-            let result = await conn.execute(boardsql.selectCount,params,oracledb.options)
+            let result = await conn.execute(boardsql.selectCount + where ,params,oracledb.options)
             let rs = result.resultSet
             let row = null;
             if ((row = await rs.getRow())) {

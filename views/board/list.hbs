@@ -2,19 +2,23 @@
     <style>
         /*header {border-bottom: 1px solid black; height: 120px}*/
         h2 { text-align: center}
-        .board {width: 700px; margin: 0 auto; table-layout: fixed}
+        .board {width: 700px; margin: 0 auto; table-layout: fixed;border-collapse: collapse}
         .board td {text-align: center; padding: 7px}
-        .board th {background: ivory }
+        .board th {background: ivory ;padding: 7px}
         .board td:nth-of-type(2) {white-space: nowrap; overflow: hidden; text-overflow: ellipsis }
         .board tr:nth-of-type(even) {background: lightgoldenrodyellow }
         .board tr:nth-of-type(odd) {background: ivory }
         .alignrgt {text-align-last: right}
+        .alignlft {text-align-last: left}
 
         .page {list-style: none; padding:0; margin: 0 auto; text-align: center}
         /* width를 빼고 text-align:center로 설정하면 가운데 정렬이 되었음*/
         .page li {display: inline-block; padding: 7px; }
         .cpage {font: bold 24px '맑은 고딕'; color: red;}
-        /*.prev {color: #cccccc}*/
+        .prev {color: #cccccc}
+
+        select {padding: 3px}
+        input[type="text"] {padding: 5px}
     </style>
 {{/section}}
 <!--<script>-->
@@ -26,6 +30,20 @@
 <!--        location.href = '보내고싶은 주소'-->
 <!--    })  // 이거랑 내가 한거랑 비교하면 그냥 내꺼 쓸래(너무 길어)-->
 <!--</script>-->
+{{# section 'script'}}
+    <script>
+        let findbtn = document.querySelector('#findbtn');
+        let ftype = document.querySelector('#ftype');
+        let fkey = document.querySelector('#fkey');
+
+        findbtn?.addEventListener('click',()=>{
+            if (fkey.value){ // fkey가 undefinded가 아니라면
+            let qry = '?ftype=' + ftype.value + '&fkey=' + fkey.value;
+            location.href = '/list.html' +qry;}
+            else{alert('제목이나 작성자를 입력하세요')}
+        });
+    </script>
+{{/section}}
 <main>
     <h2>게시판</h2>
     <section>
@@ -38,8 +56,21 @@
                     <col style="width: 15%">
                     <col style="width: 10%">
                 </colgroup>
-                <tr><td colspan="5" class="alignrgt">
-                    <button type="button" onclick="location.href='write.html'">새글쓰기</button></td></tr>
+
+                <tr>
+                    <td colspan="3" class="alignlft">
+                        <select name="ftype" id="ftype">
+                            <!--출력되는 텍스트와 값의 이름이 다른경우 value를 설정해야함-->
+                            <option value="title">제  목</option>
+                            <option value="userid">작성자</option>
+                            <option value="content">본  문</option>
+                        </select>
+                        <input type="text" name="fkey" id="fkey">
+                        <button type="button" id="findbtn">검색하기</button>
+                    </td>
+                    <td colspan="2" class="alignrgt">
+                    <button type="button" onclick="location.href='write.html'">새글쓰기</button></td>
+                </tr>
                 <tr>
                     <th>번호</th>
                     <th>제목</th>
@@ -63,23 +94,23 @@
             <ul class="page">
                 <!--이전 다음 버튼이 맨첫페이지와 맨끝페이지때 출력이 안되게끔 하는 방법-->
                 {{# if pgn.isprev}}
-                <li class="prev"><a href="?cpg={{pgn.prev}}">이전</a></li>
+                <li class="prev"><a href="?cpg={{pgn.prev}}{{qry}}">이전</a></li>
                 {{/if}}
                 {{# if pgn.tenprev}}
-                <li class="prev"><a href="?cpg={{pgn.tenprev}}">이전열</a></li>
+                <li class="prev"><a href="?cpg={{pgn.tenprev}}{{qry}}">이전열</a></li>
                 {{/if}}
                {{# stpgns}}
                    {{#if iscpg}}
                        <li class="cpage">{{num}}</li>
                    {{ else}}
-                       <li><a href="?cpg={{num}}">{{num}}</a></li>
+                       <li><a href="?cpg={{num}}{{../qry}}">{{num}}</a></li>
                    {{/if}}
                {{/stpgns}}
                 {{# if pgn.tennext}}
-                <li><a href="?cpg={{pgn.tennext}}">다음열</a></li>
+                <li><a href="?cpg={{pgn.tennext}}{{qry}}">다음열</a></li>
                 {{/if}}
                 {{# if pgn.isnext}}
-                <li><a href="?cpg={{pgn.next}}">다음</a></li>
+                <li><a href="?cpg={{pgn.next}}{{qry}}">다음</a></li>
                 {{/if}}
             </ul>
         </div>

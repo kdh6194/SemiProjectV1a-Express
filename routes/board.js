@@ -17,7 +17,8 @@ const ppg = 15;
 
 
 router.get('/list.html',async (req, res)=>{
-    let {cpg} = req.query;
+    let [cpg, ftype, fkey] = [req.query.cpg,req.query.ftype,req.query.fkey];
+    console.log(ftype, fkey)
     cpg = cpg ? parseInt(cpg) : 1;
     let stnum = (cpg - 1) * ppg + 1; // 지정한 페이지의 범위 시작값 계산
 
@@ -29,7 +30,7 @@ router.get('/list.html',async (req, res)=>{
 //  stpgn = 30<cpg<41 -> 31323334353637383940
 // stpgn = parseInt((cpg - 1) / 10) * 10 + 1
 
-    let result = new Board().show(stnum).then((result) => result);
+    let result = new Board().show(stnum,ftype,fkey).then((result) => result);
     let list = result.then(r => r.list);
     let allcnt = result.then(r =>r.allcnt); // 총 게시물 수 -> 이렇게 작성시 모델에서 손좀 봐야함
     // let allcnt = -1;
@@ -62,10 +63,12 @@ router.get('/list.html',async (req, res)=>{
     let pgn = {'prev': cpg - 1, 'next': cpg + 1 , 'isprev': isprev, 'isnext': isnext,
                 'tenprev': tenprev  ,'tennext':tennext};
 
+    // 검색후에 페이지네이션을 사용했을때 검색과 관련이 있는 주소를 출력하기위해 작성하는 구문
+    let qry = fkey ? `&ftype=${ftype}&fkey=${fkey}` : '';
 
-
-
-    res.render('board/list',{title : '게시판', list : await list, stpgns: stpgns, pgn:pgn });
+    // stpgns 안에 qry를 작성하면 구동을 하지 않는다. 이유 stpgns의 값만 반복적으로 구동을하는데 qry는 독립적으로 존재
+    // ../qry라고 작성하면 적용이된다. if만 있는곳은 반복문이 작용하는것이 아니기때문에 qry만 작성해도 됨
+    res.render('board/list',{title: '게시판', list: await list, stpgns: stpgns, pgn: pgn ,qry: qry });
 
 });
 // 조회 부분에 조회수가 찍히지 않는 이유 : models에 views를 기입이 안되서 출력 안됬음
