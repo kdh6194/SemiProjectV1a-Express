@@ -15,32 +15,43 @@ const ppg = 15;
 //  stnum : (cpage - 1) * ppg + 1
 //  ednum : stnum + ppg
 
-// 페이지네이션 : stpgn = 0<cpg<11 -> 12345678910
+
+router.get('/list.html',async (req, res)=>{
+    let {cpg} = req.query;
+    cpg = cpg ? parseInt(cpg) : 1;
+    let stnum = (cpg - 1) * ppg + 1; // 지정한 페이지의 범위 시작값 계산
+
+
+    // 페이지네이션 : stpgn = 0<cpg<11 -> 12345678910
 //  stpgn = 0<cpg<11 -> 12345678910
 //  stpgn = 10<cpg<21 -> 11121314151617181920
 //  stpgn = 20<cpg<31 -> 21222324252627282930
 //  stpgn = 30<cpg<41 -> 31323334353637383940
 // stpgn = parseInt((cpg - 1) / 10) * 10 + 1
 
-router.get('/list.html',async (req, res)=>{
-    let {cpg} = req.query;
-    cpg = cpg ? cpg : 1;
-    let stnum = (cpg - 1) * ppg + 1; // 지정한 페이지의 범위 시작값 계산
-    let stpgn = parseInt((cpg - 1) / 10) * 10 + 1
+    let allcnt = new Board().selectCount().then((list) => list); // 총 게시물 수
+    let alpg = Math.ceil(await allcnt / ppg); // 총 페이지수 계산
 
     // 페이지네이션 블럭 생성
+    let stpgn = parseInt((cpg - 1) / 10) * 10 + 1 //페이지네이션 시작값 계산
     let stpgns = [];
     for (let i = stpgn; i < stpgn + 10; i++) {
-        let iscpg = (i == cpg) ? true: false
+        if ( i<= alpg ){ // i값과 총페이지수 보다 같거나 작을때 i 출력
+            // i가 아닌 stpgn으로 설정하게 된다면 30까지는 출력이됨
+        let iscpg = (i == cpg) ? true: false  // 현재 페이지 표시
         let pgn = {'num': i,'iscpg':iscpg}
         stpgns.push(pgn)
+        }
     }
-    let alpg = new Board().selectCount().then((list) => list);
 
-    let isprev = ( cpg - 1 > 0 )? true:false ;
-    let isnext = ( cpg < alpg )? true:false ;
-    let pgn = {'prev': stpgn - 1, 'next': stpgn + 9 + 1 , 'isprev': isprev, 'isnext': isnext};
+    // 이렇게만 작성해도 boolean이 적용이 된다
+    let isprev = ( cpg - 1 > 0); //이전 표시 여부
+    let isnext = ( cpg < alpg);  //다음 표시 여부
+    let tenprev = (stpgn -1 > 0) ? stpgn - 10 : false; //이전열 표시 여부 (이전열선택시 page1로감) stpgn - 1이면 page10로감
+    let tennext = (stpgn +10 <= alpg) ? stpgn + 10 : false; //다음열 표시 여부
 
+    let pgn = {'prev': cpg - 1, 'next': cpg + 1 , 'isprev': isprev, 'isnext': isnext,
+                'tenprev': tenprev  ,'tennext':tennext};
 
 
     let list = new Board().show(stnum).then((list) => list);

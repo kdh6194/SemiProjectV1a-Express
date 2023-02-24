@@ -10,7 +10,8 @@
         .board tr:nth-of-type(odd) {background: ivory }
         .alignrgt {text-align-last: right}
 
-        .page {list-style: none; padding:0; margin: 0 auto; width: 500px}
+        .page {list-style: none; padding:0; margin: 0 auto; text-align: center}
+        /* width를 빼고 text-align:center로 설정하면 가운데 정렬이 되었음*/
         .page li {display: inline-block; padding: 7px; }
         .cpage {font: bold 24px '맑은 고딕'; color: red;}
         /*.prev {color: #cccccc}*/
@@ -60,7 +61,13 @@
                 (기본키?,뭐시기 자동생성?이 도움을 주는듯)-->
             </table>
             <ul class="page">
+                <!--이전 다음 버튼이 맨첫페이지와 맨끝페이지때 출력이 안되게끔 하는 방법-->
+                {{# if pgn.isprev}}
                 <li class="prev"><a href="?cpg={{pgn.prev}}">이전</a></li>
+                {{/if}}
+                {{# if pgn.tenprev}}
+                <li class="prev"><a href="?cpg={{pgn.tenprev}}">이전열</a></li>
+                {{/if}}
                {{# stpgns}}
                    {{#if iscpg}}
                        <li class="cpage">{{num}}</li>
@@ -68,7 +75,12 @@
                        <li><a href="?cpg={{num}}">{{num}}</a></li>
                    {{/if}}
                {{/stpgns}}
+                {{# if pgn.tennext}}
+                <li><a href="?cpg={{pgn.tennext}}">다음열</a></li>
+                {{/if}}
+                {{# if pgn.isnext}}
                 <li><a href="?cpg={{pgn.next}}">다음</a></li>
+                {{/if}}
             </ul>
         </div>
         <div class="clearfix"></div>
