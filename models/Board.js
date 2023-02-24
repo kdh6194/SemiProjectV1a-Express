@@ -80,12 +80,13 @@ class Board {
         let conn = null;
         let params = [stnum, stnum + ppg ];
         let list = [];
+        let allcnt = -1;
         //  sjs 빈 배열을 안에 담지 않았을때에는 하나만 출력이 되었는데
         // 빈 배열 안에 push를 해서 계속 담으니 값이 많이 출력 되었다
         try {
             conn = await oracledb.makeConn();
-            let idx = await this.selectCount();
-                idx = idx - stnum + 1;
+            allcnt = await this.selectCount(conn);
+                let idx = allcnt - stnum + 1;
 
 
 
@@ -104,18 +105,17 @@ class Board {
         }
         catch (e){ console.log(e); }
         finally { await oracledb.closeConn(conn); }
+        let result = {'list':list,'allcnt':allcnt}
 
-        return await list;
+        return await result;
     }
 
 
-    async selectCount() {  // 총 게시물 수 계산
-        let conn = null;
+    async selectCount(conn) {  // 총 게시물 수 계산
         let params = [];
         let cnt = -1;
 
         try {
-            conn = await oracledb.makeConn();
             let result = await conn.execute(boardsql.selectCount,params,oracledb.options)
             let rs = result.resultSet
             let row = null;
@@ -126,10 +126,9 @@ class Board {
 
         }
         catch (e){ console.log(e); }
-        finally { await oracledb.closeConn(conn); }
 
         return await cnt;
-    }
+    } // 이건많이 줄여서 쓸 수 있다는 것이네
 
     //성적 상세조회
     async showOne(bno) {

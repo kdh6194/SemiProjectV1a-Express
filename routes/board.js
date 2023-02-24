@@ -29,7 +29,16 @@ router.get('/list.html',async (req, res)=>{
 //  stpgn = 30<cpg<41 -> 31323334353637383940
 // stpgn = parseInt((cpg - 1) / 10) * 10 + 1
 
-    let allcnt = new Board().selectCount().then((list) => list); // 총 게시물 수
+    let result = new Board().show(stnum).then((result) => result);
+    let list = result.then(r => r.list);
+    let allcnt = result.then(r =>r.allcnt); // 총 게시물 수 -> 이렇게 작성시 모델에서 손좀 봐야함
+    // let allcnt = -1;
+    //          allcnt = await this.selectCount(conn);
+    //          let idx = allcnt - stnum + 1;
+    //          let result = {'list':list,'allcnt':allcnt}
+    //         return await result;
+    // 이게 모델에 있어야 작동한다 안그럴꺼면 밑에 구문으로 작성
+    // let allcnt = new Board().selectCount().then((list) => list);
     let alpg = Math.ceil(await allcnt / ppg); // 총 페이지수 계산
 
     // 페이지네이션 블럭 생성
@@ -54,7 +63,7 @@ router.get('/list.html',async (req, res)=>{
                 'tenprev': tenprev  ,'tennext':tennext};
 
 
-    let list = new Board().show(stnum).then((list) => list);
+
 
     res.render('board/list',{title : '게시판', list : await list, stpgns: stpgns, pgn:pgn });
 
